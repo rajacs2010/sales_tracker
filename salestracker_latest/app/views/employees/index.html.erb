@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">	
+<html>
+  <head>
+    <title>
+			Sales Tracker
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="description" content="Sales Tracker" />
+    <meta name="keywords" content="Sales Tracker"/>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="javascript/jquery-2.0.2.min.js"></script>
+    <script type="text/javascript" src="javascript/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="js/employee.js"></script>
+    <script type="text/javascript" src="js/map_.js"></script>
+    <%#*<script type="text/javascript" src="js/planned_details.js"></script>%>
+    <script type="text/javascript" src="js/http_req.js"></script>
+    <script type="text/javascript" src="js/employee_show_tree.js"></script>
+    <script type="text/javascript" src="js/filter_dropdown.js"></script>
+    <script type="text/javascript" src="js/user_auth.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <link rel="stylesheet" href="css/employee.css"  type="text/css"/>
+    <link rel="stylesheet" href="javascript/jquery-ui.css" />
+    <script src="javascript/jquery-ui.js"></script>
+    <script src="javascript/jquery.timepicker.js"></script>
+    <link rel="stylesheet" href="javascript/jquery.timepicker.css" />
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-162157-1";
+urchinTracker();
+</script>
+      <script type="text/javascript" src="js/marker_cluster.js"></script>
+      <script type="text/javascript" src="js/marker_compiled.js"></script>
+    <%#*<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer.js"></script>%>
+      <script>
+        $( document ).ready(function() {
+            //load_all_data();
+        });
+        </script>
+    <style>
+      .text_css3
+      {
+        border: 1px solid #000000;
+        border-radius: 5px;
+        font-size: 1.2em;
+        height: 20%;
+        padding: 5px;
+        position: relative;
+        width: 68%;
+      }
+      .loading_data
+      {
+        
+   z-index: 1000;
+   top:300px;
+   left:500px;
+   position:absolute;
+      }
+}
+    </style>
+      <script>
+    $( document ).ready(function() {
+     // load_all_data();
+      $('#principal').on('change', function() {
+     var principal= $('#principal').val();
+     var params_principal ={'principal' : principal};
+     $.ajax({
+          url : "/employees/get_principal_data_brand",
+          data : params_principal,
+          type : "POST",
+          error : function(error) {
+            hideLoader('fail', 'Sorry Server down,\n Please try again later', '');
+
+          },
+          success : function(data) {
+            var success = data['success'];
+         
+
+            if(success == "1")
+            {
+
+                // alert(JSON.stringify(data['message']));
+                        var brand_array=data['message'];
+                             $('#brand').empty().append($('<option>', {
+                                value: "0",
+                                 text : "ALL"
+                                     }));
+                               $.each(brand_array, function (i, item) {
+                                   $('#brand').append($('<option>', {
+                                       value: item.brand_code,
+                                         text : item.brand_name
+                                            }));
+                                     });
+
+
+              }
+           
+           
+            }
+
+
+
+
+
+        });
+
+
+        $.ajax({
+          url : "/employees/get_principal_data_product",
+          data : params_principal,
+          type : "POST",
+          error : function(error) {
+            hideLoader('fail', 'Sorry Server down,\n Please try again later', '');
+
+          },
+          success : function(data) {
+            var success = data['success'];
+
+
+            if(success == "1")
+            {
+
+                // alert(JSON.stringify(data['message']));
+                        var product_array=data['message'];
+                             $('#product').empty().append($('<option>', {
+                                value: "0",
+                                 text : "ALL"
+                                     }));
+                               $.each(product_array, function (i, item) {
+                                   $('#product').append($('<option>', {
+                                       value: item.product_code,
+                                         text : item.product_name
+                                            }));
+                                     });
+
+
+              }
+
+
+            }
+
+
+
+
+
+        });
+
+    });
+});
+
+        </script>
+
+
+       <script>
+    $( document ).ready(function() {
+
+      $('#brand').on('change', function() {
+     var brand= $('#brand').val();
+     var params_brand ={'brand' : brand};
+     $.ajax({
+          url : "/employees/get_brand_data_principal",
+          data : params_brand,
+          type : "POST",
+          error : function(error) {
+            hideLoader('fail', 'Sorry Server down,\n Please try again later', '');
+
+          },
+          success : function(data) {
+            var success = data['success'];
+
+
+            if(success == "1")
+            {
+
+                // alert(JSON.stringify(data['message']));
+                        var principal_array=data['message'];
+                             $('#principal').empty().append($('<option>', {
+                                value: "0",
+                                 text : "ALL"
+                                     }));
+                               $.each(principal_array, function (i, item) {
+                                   $('#principal').append($('<option>', {
+                                       value: item.principal_code,
+                                         text : item.principal_name
+                                            }));
+                                     });
+
+
+              }
+
+
+            }
+
+
+
+
+
+        });
+
+
+        $.ajax({
+          url : "/employees/get_brand_data_product",
+          data : params_brand,
+          type : "POST",
+          error : function(error) {
+            hideLoader('fail', 'Sorry Server down,\n Please try again later', '');
+
+          },
+          success : function(data) {
+            var success = data['success'];
+
+
+            if(success == "1")
+            {
+
+                // alert(JSON.stringify(data['message']));
+                        var product_array=data['message'];
+                             $('#product').empty().append($('<option>', {
+                                value: "0",
+                                 text : "ALL"
+                                     }));
+                               $.each(product_array, function (i, item) {
+                                   $('#product').append($('<option>', {
+                                       value: item.product_code,
+                                         text : item.product_name
+                                            }));
+                                     });
+
+
+              }
+
+
+            }
+
+
+
+
+
+        });
+
+    });
+});
+
+        </script>
+
+
+        <script>
+    $( document ).ready(function() {
+
+      $('#product').on('change', function() {
+     var product= $('#product').val();
+     var params_product ={'product' : product};
+     $.ajax({
+          url : "/employees/get_product_data_principal",
+          data : params_product,
+          type : "POST",
+          error : function(error) {
+            hideLoader('fail', 'Sorry Server down,\n Please try again later', '');
+
+          },
+          success : function(data) {
+            var success = data['success'];
+
+
+            if(success == "1")
+            {
+
+                // alert(JSON.stringify(data['message']));
+                        var principal_array=data['message'];
+                             $('#principal').empty().append($('<option>', {
+                                value: "0",
+                                 text : "ALL"
+                                     }));
+                               $.each(principal_array, function (i, item) {
+                                   $('#principal').append($('<option>', {
+                                       value: item.principal_code,
+                                         text : item.principal_name
+                                            }));
+                                     });
+
+
+              }
+
+
+            }
+
+
+
+
+
+        });
+
+
+        $.ajax({
+          url : "/employees/get_product_data_brand",
+          data : params_product,
+          type : "POST",
+          error : function(error) {
+            hideLoader('fail', 'Sorry Server down,\n Please try again later', '');
+
+          },
+          success : function(data) {
+            var success = data['success'];
+
+
+            if(success == "1")
+            {
+
+                // alert(JSON.stringify(data['message']));
+                        var brand_array=data['message'];
+                             $('#brand').empty().append($('<option>', {
+                                value: "0",
+                                 text : "ALL"
+                                     }));
+                               $.each(brand_array, function (i, item) {
+                                   $('#brand').append($('<option>', {
+                                       value: item.brand_code,
+                                         text : item.brand_name
+                                            }));
+                                     });
+                                     
+
+
+              }
+
+
+            }
+
+
+
+
+
+        });
+
+    });
+});
+
+        </script>
+
+
+  </head>
+  <body>
+    <div class="container">
+      <!-- 		<div class="header">Location Tracker</div> -->
+      <div class="left_div">
+        <div id="loading_data" style="display:none;" class="loading_data" >
+    <img src="images/loading.gif" id="loading" alt="Loading" title="Loading" height="59px" width="59px">
+        </div>
+        <div id="map_canvas">
+        </div>
+
+        <!-- <div class="bottom_div">
+          <img src="images/timeline_marker.png" id="timeline_marker"> 
+          <ul id="timeline">
+           <li id="9_00"><img src="images/timeline_marker.png" id="tm9_00"><a href="#">9am</a></li>
+            <li id="9_30" class="dot"><img src="images/timeline_marker.png" id="tm9_30"><a href="#">.</a></li>
+            <li id="10_00"><img src="images/timeline_marker.png" id="tm10_00"><a href="#">10am</a></li>
+            <li id="10_30" class="dot"><img src="images/timeline_marker.png" id="tm10_30"><a href="#">.</a></li>
+            <li id="11_00"><img src="images/timeline_marker.png" id="tm11_00"><a href="#">11am</a></li>
+            <li id="11_30" class="dot"><img src="images/timeline_marker.png" id="tm11_30"><a href="#">.</a></li>
+            <li id="12_00"><img src="images/timeline_marker.png" id="tm12_00"><a href="#">12noon</a></li>
+            <li id="12_30" class="dot"><img src="images/timeline_marker.png" id="tm12_30"><a href="#">.</a></li>
+            <li id="13_00"><img src="images/timeline_marker.png" id="tm13_00"><a href="#">1pm</a></li>
+            <li id="13_30" class="dot"><img src="images/timeline_marker.png" id="tm13_30"><a href="#">.</a></li>
+            <li id="14_00"><img src="images/timeline_marker.png" id="tm14_00"><a href="#">2pm</a></li>
+            <li id="14_30" class="dot"><img src="images/timeline_marker.png" id="tm14_30"><a href="#">.</a></li>
+            <li id="15_00"><img src="images/timeline_marker.png" id="tm15_00"><a href="#">3pm</a></li>
+            <li id="15_30" class="dot"><img src="images/timeline_marker.png" id="tm15_30"><a href="#">.</a></li>
+            <li id="16_00"><img src="images/timeline_marker.png" id="tm16_00"><a href="#">4pm</a></li>
+            <li id="16_30" class="dot"><img src="images/timeline_marker.png" id="tm16_30"><a href="#">.</a></li>
+            <li id="17_00"><img src="images/timeline_marker.png" id="tm17_00"><a href="#">5pm</a></li>
+            <li id="17_30" class="dot"><img src="images/timeline_marker.png" id="tm17_30"><a href="#">.</a></li>
+            <li id="18_00"><img src="images/timeline_marker.png" id="tm18_00"><a href="#">6pm</a></li>
+            <li id="18_30" class="dot"><img src="images/timeline_marker.png" id="tm18_30"><a href="#">.</a></li>
+            <li id="19_00"><img src="images/timeline_marker.png" id="tm19_00"><a href="#">7pm</a></li>
+            <li id="19_30" class="dot"><img src="images/timeline_marker.png" id="tm19_30"><a href="#">.</a></li>
+            <li id="20_00"><img src="images/timeline_marker.png" id="tm20_00"><a href="#">8pm</a></li>
+          </ul>
+        </div> -->
+
+<%#*<div class="show_details_top">%>
+
+<%#*<a href="#"><div class="legend"> LEGEND </div></a>%>
+<%#*<div class="show_details">%>
+<%#*<div class="show_details_left">%>
+<%#*<div class="planned show_details_left1"><div class="planned_rect"></div><span>Planned</span><!-- <input type="checkbox" id="planned_checked"> --></div>%>
+<%#*<div class="actual show_details_left1"><div class="actual_rect"></div><span>Actual</span><!-- <input type="checkbox" id="actual_checked"> --></div>%>
+<%#*<div class="black_dot11 show_details_left1"><div class="black_dot12"></div><span>Halt </span></div>%>
+<%#*</div>%>
+<%#*<div class="show_details_right">%>
+<%#*<div class="black_dot show_details_left1"><div class="black_dot1"></div><span>Start of the day </span></div>%>
+<%#*<div class="gmap_pin show_details_left1"><img src="images/our-new-pin.png" class="gmap_pin_img"><span>Position </span></div>%>
+<%#*<div class="gmap_pin_current show_details_left1"><img src="images/timeline_marker.png" class="gmap_pin_img"><span>Last Known Place </span></div>%>
+<%#*</div>%>
+<%#*</div>%>
+<%#*</div>%>
+
+      </div>
+      <div class="right_div">
+        <div class="user_area">
+          <div class="header">
+            <div id="tracker">
+           			 Sales Tracker
+            </div>
+            <a href="#"><img src="images/logout.png" id="logout"></a>
+          </div>
+          <div id="user_name">
+            <span id="manager_name">Ajay</span>
+            <span id="post_">Area sales manager (chennai)</span>
+
+          </div>
+
+        </div>
+        <div class="employee_list">
+          <div class="emp_left">
+<%#*<img src="images/calendar_icon.png" id="calendar-icon">%>
+
+          </div>
+          <div class="emp_right">
+            <input type="hidden" id="date">
+            <input type="hidden" id="time">
+
+            <div class="emp_list" id="emp_list">
+            </div>
+            <div class="emp_list1" id="emp_list1">
+            </div>
+            <div class="emp_list2" id="emp_list2">
+              <div class="fiter_tags tog">
+                <!-- <div class="filter_t">
+							 <span>City | </span> 
+							 <select class="filter_select">
+								<option>Chennai</option>
+								<option>Madurai</option>
+								<option>Coimbatore</option>
+								<option>Trichy</option>
+							</select> 
+						<img src="img/tag-close.png"  class="tag-close"/>
+						</div> -->
+                <div style="width:290px;">
+
+
+                  <input type="hidden" id="from_date2" class="text_css" value="<%=@from_time%>"/>
+
+
+                </div>
+
+                <div style="width:300px;">
+                  <table>
+                    <tr>
+                      <td style="color:#000;background-color:#EBEBEB;padding-left: 6px;width:20%;">
+                        From Date
+                      </td>
+                      <td style="color:#000;background-color:#EBEBEB;width:50%">
+                        <input type="text" id="from_date"   class="text_css" onchange="from_date_show();" value="<%=@from_time%>"/>
+                        <img src="images/timeline_marker.png" id="today_date" alt="Today" title="Today" style="cursor:pointer;" onclick="from_date_show('<%=@from_time%>','')"/>
+
+                      </td>
+                    </tr>
+                
+                  </table>
+
+                </div>
+
+                <div style="width:300px;">
+                  <table>
+                    <tr>
+                      <td style="color:#000;background-color:#EBEBEB;padding-left: 6px;width:20%;">
+                        To Date &nbsp;&nbsp;&nbsp;&nbsp;
+                      </td>
+                      <td style="color:#000;background-color:#EBEBEB;width:50%;">
+                        <input type="text" id="to_date"  class="text_css" onchange="from_date_show();" value="<%=@from_time%>"/>
+                        <img src="images/timeline_marker.png" id="today_date_now" style="cursor:pointer;" alt="Today" title="Today" onclick="from_date_show('','<%=@from_time%>')"/>
+                      </td>
+                    </tr>
+                  </table>
+
+                </div>
+                <br/>
+                <div class="filter_t company_ filter_t12">
+                  <div class="filter_type filter_type1">Company</div>
+                  <input type="text" class="filter_select" id="company_user" name="company_user"/>
+                  <!-- <option></option>
+								<option>WWCV</option>
+								<option>FMCL</option> -->
+
+                </div>
+
+                <div class="filter_t company_ filter_t12">
+                  <div class="filter_type filter_type1">Principal</div>
+                  <select class="filter_select" id="principal" onchange="from_date_show();">
+                    <!-- <option></option>
+								<option>WWCV</option>
+								<option>FMCL</option> -->
+                  </select>
+                </div>
+                <div class="filter_t company_ filter_t12">
+                  <div class="filter_type filter_type1">Brand</div>
+                  <select class="filter_select" id="brand" onchange="from_date_show();">
+                    <!-- <option></option>
+								<option>WWCV</option>
+								<option>FMCL</option> -->
+                  </select>
+                </div>
+                <div class="filter_t company_ filter_t12">
+                  <div class="filter_type filter_type1">Product</div>
+                  <select class="filter_select" id="product" onchange="from_date_show();">
+                    <!-- <option></option>
+								<option>WWCV</option>
+								<option>FMCL</option> -->
+                  </select>
+                </div>
+
+
+
+
+
+
+                <!-- <img src="img/2013-05-18 11.59.18.jpg"  class="tag-close" id="tag-close1" onclick="toggle_close(1)"/> -->						</div>
+
+
+              <div class="filter_t rsm_ filter_t12">
+                <div class="filter_type filter_type1">RSM</div>
+
+                <select class="filter_select" id="rsm" onchange="from_date_show();">
+                  <!-- <option></option>
+								<option>Raj</option>
+								<option>Ram</option> -->
+                </select>
+              </div>
+              <div class="filter_t company_ filter_t12">
+                <div class="filter_type filter_type1">Tot..Sales</div>
+                <input type="text" id="total_sales" name="total_sales" class="filter_select" />
+
+              </div>
+              <div class="filter_t company_ filter_t12">
+                <div class="filter_type filter_type1">Tot..Orders</div>
+                <input type="text" id="total_orders" name="total_orders" class="filter_select" />
+
+              </div>
+              <div class="filter_t company_ filter_t12">
+                <div class="filter_type filter_type1">Tot.Ln.Item</div>
+                <input type="text" id="total_line_item" name="total_line_item" class="filter_select" />
+
+              </div>
+              <div class="filter_t company_ filter_t12">
+                <div class="filter_type filter_type1">Avg.Ln.Item</div>
+                <input type="text" id="avg_line_item" name="avg_line_item" class="filter_select" />
+
+              </div>
+              <div class="filter_t company_ filter_t12">
+                <div class="filter_type filter_type1">Drop Size</div>
+                <input type="text" id="drop_size" name="drop_size" class="filter_select" />
+
+              </div>
+
+
+
+
+
+              <!-- <span class="rating_style filter_t4" >Ratings Above</span>
+						<div class="maxrating">
+
+						</div> -->
+            </div>
+
+          </div>
+
+        </div>
+        <div class="emp_right1">
+<%#*<span id="date_now1">From Date</span>%>
+
+<%#*<a href="#"><img id="time_now" src="images/timeline_marker.png"/></a>%>
+        </div>
+      </div>
+
+    </div>
+
+
+
+    <div class="login">
+      <div class="grey">
+      </div>
+      <div class="login_div">
+        <p>Sales Tracker</p>
+        <div>
+          <!-- <form> -->
+          <input type="text" placeholder="User Name" id="usr_name" />
+          <input type="password" placeholder="Password" id="password"/>
+          <input type="submit" value="Login" id="login_button">
+          <!-- </form> -->
+        </div>
+      </div>
+    </div>
+
+
+    <div class="admin">
+      <div class="grey">
+      </div>
+      <div class="admin_div">
+        <p>Admin</p>
+
+        <div class="create_new_user_content">
+          <div class="list__"><span>Employee code </span><input type="text" placeholder="Employee code" id="employee_code"/></div>
+          <div class="list__"><span>Name</span><input type="text" placeholder="Employee Name" id="employee_name"/></div>
+          <div class="list__"><span>Desgination</span><input type="text" placeholder="Desgination" id="desgination"/></div>
+          <div class="list__"><span>Password </span><input type="password" placeholder="Password" id="employee_password"/></div>
+          <div class="list__"><span>Confirm Password </span><input type="password" placeholder="Confirm Password" id="employee_confirm_pwd"/></div>
+          <div class="list__"><span>Employee Role</span>
+            <div class="list__div">
+              <select class="filter_select employee_role" id ="employee_role">
+                <!-- <option value></option>
+		             					<option value="FMCL">FMCL</option>
+		             					<option value="WWCV">WWCV</option>
+		             					<option value="KD">KD</option>
+		             					<option value="FMCL KD">FMCL KD</option>
+		             					<option value="ALL">ALL</option> -->
+
+              </select>
+            </div>
+          </div>
+          <div class="save_new_user">Save</div>
+          <div class="logout_admin">logout</div>
+        </div>
+
+      </div>
+    </div>
+  </body>
+
+</html>

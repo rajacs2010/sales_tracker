@@ -1,0 +1,17 @@
+<%= form_for(@kd_detail) do |f| %>
+  <% if @kd_detail.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@kd_detail.errors.count, "error") %> prohibited this kd_detail from being saved:</h2>
+
+      <ul>
+      <% @kd_detail.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

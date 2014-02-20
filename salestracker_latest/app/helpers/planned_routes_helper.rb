@@ -1,0 +1,2 @@
+module PlannedRoutesHelper
+end

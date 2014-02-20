@@ -1,0 +1,5 @@
+class PlannedRoutesController < ApplicationController
+
+
+
+end

@@ -1,0 +1,2 @@
+module KdDetailsHelper
+end

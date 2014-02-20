@@ -1,0 +1,21 @@
+<h1>Listing temp_emp_trees</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @temp_emp_trees.each do |temp_emp_tree| %>
+  <tr>
+    <td><%= link_to 'Show', temp_emp_tree %></td>
+    <td><%= link_to 'Edit', edit_temp_emp_tree_path(temp_emp_tree) %></td>
+    <td><%= link_to 'Destroy', temp_emp_tree, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Temp emp tree', new_temp_emp_tree_path %>

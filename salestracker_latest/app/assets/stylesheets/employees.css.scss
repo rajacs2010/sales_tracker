@@ -1,0 +1,271 @@
+// // Place all the styles related to the employees controller here.
+// // They will automatically be included in application.css.
+// // You can use Sass (SCSS) here: http://sass-lang.com/
+// 
+// // @font-face
+// // {
+  // // font-family: 'futura';
+  // // src: url('futura-medium_1.ttf') format("truetype");
+  // // font-weight: normal;
+// // }
+// 
+// body
+// {
+  // position: fixed;
+  // width: 100%;
+  // height: 100%;
+  // margin:0px;
+// }
+// 
+// /*html { 
+  // background: url('images/back1.png') repeat center center fixed; 
+  // -webkit-background-size: cover;
+  // -moz-background-size: cover;
+  // -o-background-size: cover;
+  // -ms-background-size: cover;
+  // background-size: cover;
+// }*/
+// 
+// #map_canvas
+// {
+  // position: relative;
+//   
+  // /*top: 0px;
+  // left: 0px;
+  // right: 0px;
+  // bottom: 40px;
+  // */
+// }
+// 
+// .container
+// {
+  // position: relative;
+// 
+  // top: 0px;
+  // left: 0px;
+  // bottom: 0px;
+  // right: 20%;
+// }
+// 
+// .bottom_div
+// {
+  // position: relative;
+//   
+  // bottom: 0px;
+  // background-color: #fff;
+// }
+// 
+// .right_div
+// {
+  // position: absolute;
+  // right: 0px;
+  // top: 0px;
+  // height: 100%;
+  // box-shadow: 3px 3px 10px 5px #414242;
+// }
+// 
+// .user_area
+// {
+  // position: relative;
+  // background-color: #34495e;
+// 
+// }
+// 
+// #user_name
+// {
+  // position: relative;
+  // color: white;
+  // font-family: futura;
+  // font-size: 2em;
+  // top: 50%;
+  // left: 15%;
+// }
+// 
+// .employee_list
+// {
+  // position: relative;
+  // background-color: #ebebeb;
+  // right: 0px;
+// 
+// }
+// 
+// .emp_left
+// {
+  // position: absolute;
+  // left: 0px;
+  // width: 20%;
+  // padding-top: 6.5%;
+  // text-align: center;
+// }
+// 
+// .emp_right
+// {
+  // position: absolute;
+  // left: 20%;
+  // padding-top: 5%;
+  // width: 60%;
+  // top: 0px;
+// }
+// 
+// #tracker
+// {
+  // position: absolute;
+  // font-family: futura;
+  // left: 15%;
+  // top: 9%;
+  // font-size: 1em;
+  // color: #05192c;
+// }
+// 
+// #logout
+// {
+  // position: absolute;
+  // top: 9%;
+  // left: 85%;
+// }
+// 
+// #calendar_icon
+// {
+  // position: relative;
+// 
+// }
+// 
+// .name_marker
+// {
+  // position: absolute;
+  // left: -25%;
+  // padding-top: 2%;
+  // display: none;
+// }
+// 
+// #date
+// {
+  // position: relative;
+  // width: 110%;
+  // height: 20%;
+  // font-size: 1.4em;
+  // padding: 5px;
+  // -webkit-border-radius: 5px;
+  // -moz-border-radius: 5px;
+  // -o-border-radius: 5px;
+  // border-radius: 5px;
+  // border: 1px solid #000;
+// }
+// 
+// input
+// {
+  // outline: none;
+// }
+// 
+// a
+// {
+  // outline: none;
+// }
+// 
+// #emp_search
+// {
+  // position: absolute;
+// 
+  // width: 100%;
+  // height: 100%;
+  // font-family: futura;
+  // font-size: 1.8em;
+  // background-color: #b7b7b7;
+  // outline: none;
+  // border: none;
+  // border: 0px;
+// }
+// 
+// #search_icon
+// {
+  // margin: auto 5px;
+  // vertical-align: middle;
+  // width: 25px;
+  // padding-top: 3%;
+  // /*position: absolute;
+  // z-index: 2;
+  // margin: auto 0px;
+  // vertical-align: middle;*/
+  // /*left: 2%;
+  // top: 2%;*/
+// }
+// 
+// .emp_list
+// {
+  // position: relative;
+  // top: 240%;
+  // height: 60%;
+  // left: 0%;
+  // // overflow:auto;
+// 
+//   
+// }
+// 
+// .emp_list li
+// {
+  // font-family: futura;
+  // font-size: 1.4em;
+  // line-height: 1.6em;
+// }
+// ul
+// {
+    // list-style-type: none;
+    // padding: 0px;
+// 
+// }
+// 
+// .emp_search
+// {
+  // position: absolute;
+  // margin: 0px;
+  // padding: 0px;
+  // font-family: futura;
+  // font-size: 1em;
+  // color: #555454; 
+  // /*width: 100%;*/
+  // /*height: 100%;*/
+  // background-color: #b7b7b7;
+// }
+// 
+// .classname
+// {
+  // color: #2ecc71;
+// }
+// 
+// .classname2
+// {
+  // color: #2ecc71;
+// }
+// 
+// 
+// #timeline li
+// {
+  // position: relative;
+  // top: 0px;
+  // left: 0%;
+  // font-family: futura;
+  // font-size: 1.0em;
+  // /*color: #555454;*/
+  // float: left;
+  // width:8.25%;
+  // text-align:center;
+//   
+// }
+// 
+// #timeline
+// {
+  // color: #555454;
+  // margin-left: 1%;
+// }
+// 
+// 
+// 
+// #timeline li img
+// {
+  // position: absolute;
+  // top: -75%;
+  // left: 45%;
+  // display: none;
+// 
+// }
+// 

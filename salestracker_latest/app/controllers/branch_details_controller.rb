@@ -1,0 +1,3 @@
+class BranchDetailsController < ApplicationController
+ 
+end
